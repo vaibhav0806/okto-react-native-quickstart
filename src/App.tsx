@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { 
-  SafeAreaView, 
-  StatusBar, 
-  StyleSheet, 
-  Button, 
-  View, 
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Button,
+  View,
   Text,
   Modal,
-  ScrollView 
+  ScrollView
 } from 'react-native';
 import GoogleSignInButton from './components/GoogleSignInButton';
 import { User } from '@react-native-community/google-signin';
 import { useOkto, type OktoContextType } from 'okto-sdk-react-native';
 import GetButton from './components/GetButton';
+import TransferTokens from './components/TransferTokens';
 
 const App: React.FC = () => {
   const [userInfo, setUserInfo] = useState<User | null>(null);
@@ -21,7 +22,14 @@ const App: React.FC = () => {
 
   const {
     authenticate,
-    getPortfolio
+    getPortfolio,
+    getSupportedNetworks,
+    getSupportedTokens,
+    getUserDetails,
+    getWallets,
+    createWallet,
+    orderHistory,
+    getNftOrderDetails,
   } = useOkto() as OktoContextType;
 
   function handleAuthenticate(result: any, error: any) {
@@ -45,9 +53,9 @@ const App: React.FC = () => {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <View style={styles.content}>
+        <ScrollView style={styles.content}>
           <Text style={styles.title}>Okto Demo App</Text>
-          
+
           {/* Authentication Section */}
           <View style={styles.authSection}>
             <View style={styles.buttonGroup}>
@@ -66,8 +74,21 @@ const App: React.FC = () => {
           <View style={styles.apiSection}>
             <Text style={styles.sectionTitle}>API Actions</Text>
             <GetButton title="Get Portfolio" apiFn={getPortfolio} />
+            <GetButton title="Get Supported Networks" apiFn={getSupportedNetworks} />
+            <GetButton title="Get Supported Tokens" apiFn={getSupportedTokens} />
+            <GetButton title="Get User Details" apiFn={getUserDetails} />
+            <GetButton title="Get Wallets" apiFn={getWallets} />
+            <GetButton title="Create Wallet" apiFn={createWallet} />
+            <GetButton title="Order History" apiFn={orderHistory} />
+            <GetButton
+              title="Get Nft Order Details"
+              apiFn={() => getNftOrderDetails({})}
+            />
           </View>
-        </View>
+
+          {/* Transfer Tokens Section */}
+          <TransferTokens />
+        </ScrollView>
 
         {/* Authentication Modal */}
         <Modal
@@ -86,8 +107,8 @@ const App: React.FC = () => {
               <Text style={styles.modalText}>{authResult}</Text>
             </ScrollView>
             <View style={styles.modalFooter}>
-              <Button 
-                title="Close" 
+              <Button
+                title="Close"
                 onPress={() => setAuthModalVisible(false)}
               />
             </View>

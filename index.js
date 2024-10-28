@@ -6,11 +6,12 @@ import { AppRegistry } from 'react-native';
 import App from './src/App';
 import { name as appName } from './app.json';
 import { OktoProvider, BuildType } from 'okto-sdk-react-native';
+import { OKTO_CLIENT_APP_SECRET } from "@env";
 
 // Create a Root component that wraps App with OktoProvider
 function Root() {
     return (
-        <OktoProvider apiKey={"dcece6f3-68d3-4ca8-b5eb-e14d4a0dac36"} buildType={BuildType.SANDBOX}>
+        <OktoProvider apiKey={OKTO_CLIENT_APP_SECRET} buildType={BuildType.SANDBOX}>
             <App />
         </OktoProvider>
     );

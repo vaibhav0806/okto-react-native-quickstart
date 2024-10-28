@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Button, Text, View, StyleSheet} from 'react-native';
 import {GoogleSignin, User} from '@react-native-community/google-signin';
+import { GOOGLE_WEB_CLIENT_ID } from "@env";
 
 GoogleSignin.configure({
-  webClientId:
-    '1012448280479-3ag6a7om9js696e9tusohn7n7c8nan0r.apps.googleusercontent.com',
+  webClientId: GOOGLE_WEB_CLIENT_ID,
   offlineAccess: false,
 });
 
